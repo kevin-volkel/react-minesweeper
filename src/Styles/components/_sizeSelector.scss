@@ -1,0 +1,40 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables' as *;
+@use '../util/mixins' as *;
+
+.size-selector{
+  height: 30vh;
+  width: 50vw;
+  position: absolute;
+  top: 35vh;
+  left: 25vw;
+  background: $clr-primary-2;
+  border-radius: $radius;
+  .size-form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .form-title{
+      font-family: $primary-font;
+      text-align: center;
+      font-size: 2rem;
+    }
+    .slider{
+      width: 70%;
+      margin: 0 auto;
+      @include flex-between;
+    }
+    .submit-button{
+      background: $clr-primary-1;
+      margin: 2px;
+      border-radius: $radius;
+      color: white;
+      transition: $transition;
+      &:hover{
+        background: $clr-primary-0;
+        color: rgb(180, 180, 180);
+      }
+    }
+  }
+}

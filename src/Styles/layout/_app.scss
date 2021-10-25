@@ -1,0 +1,11 @@
+@use '../themes/defaultTheme' as *;
+@use '../util/variables' as *;
+@use '../util/mixins' as *;
+
+.app{
+  .title{
+    text-align: center;
+    font-family: $primary-font;
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,35 @@
+@use "../themes/defaultTheme" as *;
+@use "../util/variables" as *;
+@use "../util/mixins" as *;
+
+.game-board {
+  .game-grid {
+    background: $clr-primary-3;
+    margin: auto;
+    @include flex-column;
+    .row {
+      @include flex-center;
+      .cell {
+        border: 1px solid $clr-primary-1;
+        background: $clr-primary-2;
+        font-size: 1.2rem;
+        @include box(1.7rem);
+        text-align: center;
+        user-select: none;
+        transition: all 10ms linear;
+        svg{
+          fill: $clr-red-dark
+        }
+        &:hover{
+          background: $clr-primary-1;
+        }
+        &.revealed{
+          background: $clr-primary-3;
+          &:hover{
+            background: $clr-primary-3;
+          }
+        }
+      }
+    }
+  }
+}
