@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BsFlagFill } from "react-icons/bs";
+import React, { useState, useEffect } from 'react';
+import { BsFlagFill } from 'react-icons/bs';
 
 const GameBoard = ({ finalHeight, finalWidth, finalBombs }) => {
   const [numClicks, setNumClicks] = useState(0);
@@ -84,11 +84,11 @@ const GameBoard = ({ finalHeight, finalWidth, finalBombs }) => {
     if (!right) board[row][col + 1].isRevealed = !board[row][col + 1].isFlagged;
   };
 
-  const checkForEmptyFields = () => {
+  const checkForEmptyFields = (board) => {
     for (let i = 0; i <= finalWidth * finalHeight; i++) {
       for (let row = 0; row < finalHeight; row++) {
         for (let col = 0; col < finalWidth; col++) {
-          if (board[row][col].isEmpty) {
+          if (board[row][col].isEmpty && board[row][col].isRevealed) {
             revealSurrounding(row, col);
           }
         }
@@ -109,16 +109,20 @@ const GameBoard = ({ finalHeight, finalWidth, finalBombs }) => {
         console.log(i);
         let newBoard = createBoard();
         console.log(newBoard);
-        if (newBoard[row][col].isEmpty) break;
+        if (newBoard[row][col].isEmpty) {
+          newBoard.isRevealed = true;
+          checkForEmptyFields(newBoard);
+          break;
+        }
       }
     } else if (cell.isBomb) {
-      console.log("Game Over");
+      console.log('Game Over');
       // gameOver()
     }
     if (cell.value > 0) cell.isRevealed = true;
     if (cell.isEmpty) {
       cell.isRevealed = true;
-      checkForEmptyFields();
+      checkForEmptyFields(board);
     }
   };
 
@@ -126,9 +130,9 @@ const GameBoard = ({ finalHeight, finalWidth, finalBombs }) => {
     e.preventDefault();
     console.log(e.target);
     let id = 0;
-    if (e.target.classList.contains("cell")) {
+    if (e.target.classList.contains('cell')) {
       id = e.target.id;
-    } else if (e.target.classList.contains("svg")) {
+    } else if (e.target.classList.contains('svg')) {
       id = e.target.parentElement.id;
     } else {
       id = e.target.parentElement.parentElement.id;
@@ -151,16 +155,16 @@ const GameBoard = ({ finalHeight, finalWidth, finalBombs }) => {
     createBoard();
   }, []);
 
-  const fillCell = (cell, mode = "normal") => {
+  const fillCell = (cell, mode = 'normal') => {
     if (cell.isFlagged) return <BsFlagFill className="svg" />;
-    if (mode === "dev") {
-      if (cell.isBomb) return "B";
-      if (cell.isEmpty) return "";
+    if (mode === 'dev') {
+      if (cell.isBomb) return 'B';
+      if (cell.isEmpty) return '';
       return cell.value;
     }
-    if (mode === "normal" && cell.isRevealed) {
-      if (cell.isEmpty) return "";
-      if (cell.isBomb) return "B";
+    if (mode === 'normal' && cell.isRevealed) {
+      if (cell.isEmpty) return '';
+      if (cell.isBomb) return 'B';
       return cell.value;
     }
   };
@@ -175,14 +179,14 @@ const GameBoard = ({ finalHeight, finalWidth, finalBombs }) => {
                 return (
                   <div
                     key={colNum}
-                    className={`cell ${cell.isRevealed && "revealed"}`}
+                    className={`cell ${cell.isRevealed && 'revealed'}`}
                     id={`${rowNum < 10 ? `0${rowNum}` : rowNum}${
                       colNum < 10 ? `0${colNum}` : colNum
                     }`}
                     onClick={handleClick}
                     onContextMenu={flagCell}
                   >
-                    {fillCell(cell, "normal")}
+                    {fillCell(cell, 'normal')}
                   </div>
                 );
               })}
